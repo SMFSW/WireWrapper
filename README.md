@@ -30,9 +30,9 @@ Feel free to share your thoughts @ xgarmanboziax@gmail.com about:
 
 
 Links:
-* cI2C *
-https://github.com/SMFSW/cI2C
-https://bitbucket.org/SMFSW/ci2c
-* WireWrapper *
-https://github.com/SMFSW/WireWrapper
-https://bitbucket.org/SMFSW/wirewrapper
+cI2C
+	https://github.com/SMFSW/cI2C
+	https://bitbucket.org/SMFSW/ci2c
+WireWrapper
+	https://github.com/SMFSW/WireWrapper
+	https://bitbucket.org/SMFSW/wirewrapper
