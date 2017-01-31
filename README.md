@@ -1,11 +1,10 @@
 # WireWrapper
-Arduino Wrapper for Wire librarry (for SAM, ESP8266...)
+Arduino Wrapper for Wire library (for SAM, ESP8266...)
 A wrapper for Wire library meant to be put in place of cI2C library on SAM, ESP8266... targets
 
 ## Notes:
-* WireWrapper does not use any interrupt (yet, but soon will have to)
 * WireWrapper is designed to act as bus Master (Slave mode will be considered in future releases)
-* WireWrapper is set to work on targets with Wire library (AVR, SAM, ESP8266...)
+* WireWrapper is set to work on targets with Wire library (AVR, TINY, SAM, ESP8266...)
   * for AVR targets, you may use **cI2C** instead (plain c Wire replacement)
   * **WireWrapper** & **cI2C** libs declare same structures & functions as seen from the outside
     (switch between libs without changing anyhting but the include)

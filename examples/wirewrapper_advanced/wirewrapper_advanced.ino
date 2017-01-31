@@ -1,0 +1,150 @@
+/*
+	Master i2c (advanced)
+	Redirecting slave write & read functions in setup (to custom functions following typedef)
+	Read and Write operations are then called using the same functions
+	Function to get Chip ID are device dependant (and will probably only work on FUJITSU devices)
+
+	This example code is in the public domain.
+
+	created Jan 23 2017
+	by SMFSW
+*/
+
+#include <WireWrapper.h>
+
+const uint8_t blank = 0xEE;		// blank tab filling value for test
+
+I2C_SLAVE FRAM;					// slave declaration
+
+void setup() {
+	uint8_t str[3];
+	memset(&str, blank, sizeof(str));
+
+	Serial.begin(115200);	// start serial for output
+	I2C_init(I2C_LOW);		// init with low speed (400KHz)
+	I2C_slave_init(&FRAM, 0x50, I2C_16B_REG);
+	I2C_slave_set_rw_func(&FRAM, (ci2c_fct_ptr) I2C_wr_advanced, I2C_WRITE);
+	I2C_slave_set_rw_func(&FRAM, (ci2c_fct_ptr) I2C_rd_advanced, I2C_READ);
+
+	I2C_get_chip_id(&FRAM, &str[0]);
+
+	Serial.println();
+	//for (uint8_t i = 0; i < sizeof(str); i++)	{ Serial.print(str[i], HEX); } // print hex values
+	Serial.print("\nManufacturer ID: ");
+	Serial.print((str[0] << 4) + (str[1]  >> 4), HEX);
+	Serial.print("\nProduct ID: ");
+	Serial.print(((str[1] & 0x0F) << 8) + str[2], HEX);
+}
+
+void loop() {
+	const uint16_t reg_addr = 0;
+	uint8_t str[7];
+	memset(&str, blank, sizeof(str));
+
+	I2C_read(&FRAM, reg_addr, &str[0], sizeof(str));	// FRAM, Addr 0, str, read chars for size of str
+
+	Serial.println();
+	for (uint8_t i = 0; i < sizeof(str); i++)
+	{
+		Serial.print(str[i], HEX); // print hex values
+		Serial.print(" ");
+	}
+
+	delay(5000);
+}
+
+
+/*! \brief This procedure calls appropriate functions to perform a proper send transaction on I2C bus.
+ *  \note WIRE a is macro that expands to proper Wire instance defined in included library
+ *  \param [in, out] slave - pointer to the I2C slave structure
+ *  \param [in] reg_addr - register address in register map
+ *  \param [in] data - pointer to the first byte of a block of data to write
+ *  \param [in] bytes - indicates how many bytes of data to write
+ *  \return Boolean indicating success/fail of write attempt
+ */
+bool I2C_wr_advanced(I2C_SLAVE * slave, uint16_t reg_addr, uint8_t * data, uint16_t bytes)
+{
+	slave->reg_addr = reg_addr;
+
+	WIRE.beginTransmission(slave->cfg.addr);
+	if (slave->cfg.reg_size)
+	{
+		if (slave->cfg.reg_size >= I2C_16B_REG)	// if size >2, 16bit address is used
+		{
+			if (WIRE.write((uint8_t) (reg_addr >> 8)) == 0)	{ return false; }
+		}
+		if (WIRE.write((uint8_t) reg_addr) == 0)			{ return false; }
+	}
+
+	for (uint16_t cnt = 0; cnt < bytes; cnt++)
+	{
+		if (WIRE.write(*(data++)) == 0)						{ return false; }
+		slave->reg_addr++;
+	}
+
+	if (WIRE.endTransmission() != 0)						{ return false; }
+
+	return true;
+}
+
+
+/*! \brief This procedure calls appropriate functions to perform a proper receive transaction on I2C bus.
+ *  \note WIRE a is macro that expands to proper Wire instance defined in included library
+ *  \param [in, out] slave - pointer to the I2C slave structure
+ *  \param [in] reg_addr - register address in register map
+ *  \param [in, out] data - pointer to the first byte of a block of data to read
+ *  \param [in] bytes - indicates how many bytes of data to read
+ *  \return Boolean indicating success/fail of read attempt
+ */
+bool I2C_rd_advanced(I2C_SLAVE * slave, uint16_t reg_addr, uint8_t * data, uint16_t bytes)
+{
+	slave->reg_addr = reg_addr;
+
+	if (bytes == 0)	{ bytes = 1; }
+
+	if (slave->cfg.reg_size)	// If start register has to be sent first
+	{
+		WIRE.beginTransmission(slave->cfg.addr);
+		if (slave->cfg.reg_size >= I2C_16B_REG)	// if size >2, 16bit address is used
+		{
+			if (WIRE.write((uint8_t) (reg_addr >> 8)) == 0)	{ return false; }
+		}
+		if (WIRE.write((uint8_t) reg_addr) == 0)			{ return false; }
+		if (WIRE.endTransmission(false) != 0)				{ return false; }
+	}
+	if (WIRE.requestFrom(slave->cfg.addr, bytes) == 0)		{ return false; }
+	for (uint16_t cnt = 0; cnt < bytes; cnt++)
+	{
+		*data++ = WIRE.read();
+		slave->reg_addr++;
+	}
+
+	if (WIRE.endTransmission() != 0)						{ return false; }
+
+	return true;
+}
+
+
+/*! \brief This procedure calls appropriate functions to get chip ID of FUJITSU devices.
+ *  \note WIRE a is macro that expands to proper Wire instance defined in included library
+ *  \param [in, out] slave - pointer to the I2C slave structure
+ *  \param [in, out] data - pointer to the first byte of a block of data to read
+ *  \return Boolean indicating success/fail of read attempt
+ */
+bool I2C_get_chip_id(I2C_SLAVE * slave, uint8_t * data)
+{
+	const uint16_t bytes = 3;
+	I2C_SLAVE FRAM_ID;
+
+	I2C_slave_init(&FRAM_ID, 0xF8 >> 1, I2C_16B_REG);	// Dummy slave init for I2C_sndAddr
+
+	WIRE.beginTransmission(FRAM_ID.cfg.addr);
+	if (WIRE.write(slave->cfg.addr << 1) == 0)			{ return false; }
+	if (WIRE.endTransmission(false) != 0)				{ return false; }
+	if (WIRE.requestFrom(FRAM_ID.cfg.addr, bytes) == 0)	{ return false; }
+	for (uint16_t cnt = 0; cnt < bytes; cnt++)
+	{ *data++ = WIRE.read(); }
+	if (WIRE.endTransmission() != 0)					{ return false; }
+
+	return true;
+}
