@@ -1,12 +1,12 @@
 /*!\file WireWrapper.h
 ** \author SMFSW
-** \version 0.1
+** \version 0.2
 ** \copyright MIT SMFSW (2017)
 ** \brief arduino i2c in plain c declarations
 **/
 /****************************************************************/
 #ifndef __WIREWRAPPER_H__
-	#define __WIREWRAPPER_H__		"v0.1"
+	#define __WIREWRAPPER_H__		"v0.2"
 /****************************************************************/
 
 #if defined(DOXY)
@@ -52,9 +52,10 @@ typedef enum __attribute__((__packed__)) enI2C_RW {
  *  \attribute packed enum
  */
 typedef enum __attribute__((__packed__)) enI2C_SPEED {
-	I2C_SLOW = 100,		//!< I2C Slow speed (100KHz)
-	I2C_LOW = 400,		//!< I2C Low speed (400KHz)
-	I2C_FAST = 1000		//!< I2C Fast mode (1MHz)
+	I2C_STD = 100,		//!< I2C Standard (100KHz)
+	I2C_FM = 400,		//!< I2C Fast Mode (400KHz)
+	I2C_FMP = 1000,		//!< I2C Fast mode + (1MHz)
+	I2C_HS = 3400		//!< I2C High Speed (3.4MHz)
 } I2C_SPEED;
 
 

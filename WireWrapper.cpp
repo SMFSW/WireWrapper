@@ -1,6 +1,6 @@
 /*!\file WireWrapper.c
 ** \author SMFSW
-** \version 0.1
+** \version 0.2
 ** \copyright MIT SMFSW (2017)
 ** \brief arduino master i2c in plain c code
 **/
@@ -119,13 +119,15 @@ void I2C_init(uint16_t speed)
  */
 bool I2C_set_speed(uint16_t speed)
 {
-	i2c.cfg.speed = (I2C_SPEED) ((speed == 0) ? (uint16_t) I2C_SLOW : ((speed > (uint16_t) I2C_FAST) ? (uint16_t) I2C_SLOW : speed));
-
-	#if !defined(__TINY__)
+	#if defined(__TINY__)
+	i2c.cfg.speed = I2C_STD;
+	return false;	// Can't change I2C speed through Wire.setClock on TINY platforms
+	#else
+	i2c.cfg.speed = (I2C_SPEED) ((speed == 0) ? (uint16_t) I2C_STD : ((speed > (uint16_t) I2C_HS) ? (uint16_t) I2C_STD : speed));
 	Wire.setClock(speed * 1000);
+	return (i2c.cfg.speed == speed);
 	#endif
 
-	return (i2c.cfg.speed == speed);
 }
 
 /*! \brief Change I2C ack timeout
