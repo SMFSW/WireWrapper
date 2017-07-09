@@ -1,12 +1,12 @@
 /*!\file WireWrapper.h
 ** \author SMFSW
-** \version 0.2
+** \version 0.3
 ** \copyright MIT SMFSW (2017)
 ** \brief arduino i2c in plain c declarations
 **/
 /****************************************************************/
 #ifndef __WIREWRAPPER_H__
-	#define __WIREWRAPPER_H__		"v0.2"
+	#define __WIREWRAPPER_H__		"v0.3"
 /****************************************************************/
 
 #if defined(DOXY)
@@ -24,14 +24,13 @@
 	#include <WProgram.h>
 #endif
 
-#include <inttypes.h>
+extern "C" {
 #include <stdbool.h>
+#include <inttypes.h>
+}
 
 #include <Wire.h>
 
-#ifdef __cplusplus
-extern "C"{
-#endif
 
 #define DEF_CI2C_NB_RETRIES		3		//!< Default cI2C transaction retries
 #define DEF_CI2C_TIMEOUT		100		//!< Default cI2C timeout
@@ -58,6 +57,9 @@ typedef enum __attribute__((__packed__)) enI2C_SPEED {
 	I2C_HS = 3400		//!< I2C High Speed (3.4MHz)
 } I2C_SPEED;
 
+#if defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ESP8266_ESP01)
+#undef I2C_OK	//!\note I2C_OK already defined on ESP8266 (same value), undef before I2C_STATUS enum declaration
+#endif
 
 /*! \enum enI2C_STATUS
  *  \brief I2C slave status
@@ -184,7 +186,7 @@ extern void I2C_init(uint16_t speed);
  */
 inline void __attribute__((__always_inline__)) I2C_uninit()
 {
-	#if !defined(__TINY__)
+	#if !defined(__TINY__) && !defined(ARDUINO_ARCH_ESP8266) && !defined(ARDUINO_ESP8266_ESP01)
 	Wire.end();
 	#endif
 }
@@ -259,10 +261,5 @@ inline I2C_STATUS __attribute__((__always_inline__)) I2C_read_next(I2C_SLAVE * s
 	// TODO: implement read next so that it doesn't have to send start register address again
 	return I2C_read(slave, slave->reg_addr, data, bytes);
 }
-
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

@@ -13,6 +13,11 @@ Feel free to share your thoughts @ xgarmanboziax@gmail.com about:
 ------------
 
 ** Actual:
+v0.3	09 Jul 2017:
+- surrounded c libs with extern C
+- added I2C_OK undef when WireWrapper is included for ESP8266 (ESP8266 core use an equal I2C_OK def too)
+- No call to Wire.end on ESP8266 (no function for that)
+
 v0.2	31 Jan 2017:
 fixes for issue #1 (https://github.com/SMFSW/WireWrapper/issues/1)
 - refactored I2C_SPEED enum names for coherence with I2C specifications

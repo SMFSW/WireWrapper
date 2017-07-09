@@ -1,6 +1,6 @@
 /*!\file WireWrapper.c
 ** \author SMFSW
-** \version 0.2
+** \version 0.3
 ** \copyright MIT SMFSW (2017)
 ** \brief arduino master i2c in plain c code
 **/
