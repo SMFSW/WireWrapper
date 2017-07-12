@@ -1,12 +1,12 @@
 /*!\file WireWrapper.h
 ** \author SMFSW
-** \version 0.3
+** \version 0.4
 ** \copyright MIT SMFSW (2017)
 ** \brief arduino i2c in plain c declarations
 **/
 /****************************************************************/
 #ifndef __WIREWRAPPER_H__
-	#define __WIREWRAPPER_H__		"v0.3"
+	#define __WIREWRAPPER_H__
 /****************************************************************/
 
 #if defined(DOXY)

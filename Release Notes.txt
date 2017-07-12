@@ -13,6 +13,9 @@ Feel free to share your thoughts @ xgarmanboziax@gmail.com about:
 ------------
 
 ** Actual:
+v0.4	12 Jul 2017:
+- compliance with Arduino v1.5+ IDE source located in src subfolder
+
 v0.3	09 Jul 2017:
 - surrounded c libs with extern C
 - added I2C_OK undef when WireWrapper is included for ESP8266 (ESP8266 core use an equal I2C_OK def too)
