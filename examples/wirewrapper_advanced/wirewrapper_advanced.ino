@@ -7,7 +7,7 @@
 	This example code is in the public domain.
 
 	created Jan 23 2017
-	latest mod Feb 1 2017
+	latest mod Nov 21 2017
 	by SMFSW
 */
 
@@ -62,8 +62,10 @@ void loop() {
  *  \param [in] bytes - indicates how many bytes of data to write
  *  \return Boolean indicating success/fail of write attempt
  */
-bool I2C_wr_advanced(I2C_SLAVE * slave, uint16_t reg_addr, uint8_t * data, uint16_t bytes)
+bool I2C_wr_advanced(I2C_SLAVE * slave, const uint16_t reg_addr, uint8_t * data, const uint16_t bytes)
 {
+	if (bytes == 0)	{ return false; }
+
 	slave->reg_addr = reg_addr;
 
 	Wire.beginTransmission(slave->cfg.addr);
@@ -95,30 +97,30 @@ bool I2C_wr_advanced(I2C_SLAVE * slave, uint16_t reg_addr, uint8_t * data, uint1
  *  \param [in] bytes - indicates how many bytes of data to read
  *  \return Boolean indicating success/fail of read attempt
  */
-bool I2C_rd_advanced(I2C_SLAVE * slave, uint16_t reg_addr, uint8_t * data, uint16_t bytes)
+bool I2C_rd_advanced(I2C_SLAVE * slave, const uint16_t reg_addr, uint8_t * data, const uint16_t bytes)
 {
-	slave->reg_addr = reg_addr;
+	if (bytes == 0)	{ return false; }
 
-	if (bytes == 0)	{ bytes = 1; }
+	slave->reg_addr = reg_addr;
 
 	if (slave->cfg.reg_size)	// If start register has to be sent first
 	{
 		Wire.beginTransmission(slave->cfg.addr);
 		if (slave->cfg.reg_size >= I2C_16B_REG)	// if size >2, 16bit address is used
 		{
-			if (Wire.write((uint8_t) (reg_addr >> 8)) == 0)	{ return false; }
+			if (Wire.write((uint8_t) (reg_addr >> 8)) == 0)			{ return false; }
 		}
-		if (Wire.write((uint8_t) reg_addr) == 0)			{ return false; }
-		if (Wire.endTransmission(false) != 0)				{ return false; }
+		if (Wire.write((uint8_t) reg_addr) == 0)					{ return false; }
+		if (Wire.endTransmission(false) != 0)						{ return false; }
 	}
-	if (Wire.requestFrom(slave->cfg.addr, bytes) == 0)		{ return false; }
+	if (Wire.requestFrom((int) slave->cfg.addr, (int) bytes) == 0)	{ return false; }
 	for (uint16_t cnt = 0; cnt < bytes; cnt++)
 	{
 		*data++ = Wire.read();
 		slave->reg_addr++;
 	}
 
-	if (Wire.endTransmission() != 0)						{ return false; }
+	if (Wire.endTransmission() != 0)								{ return false; }
 
 	return true;
 }
@@ -131,18 +133,18 @@ bool I2C_rd_advanced(I2C_SLAVE * slave, uint16_t reg_addr, uint8_t * data, uint1
  */
 bool I2C_get_chip_id(I2C_SLAVE * slave, uint8_t * data)
 {
-	const uint16_t bytes = 3;
+	const int16_t bytes = 3;
 	I2C_SLAVE FRAM_ID;
 
 	I2C_slave_init(&FRAM_ID, 0xF8 >> 1, I2C_16B_REG);	// Dummy slave init for I2C_sndAddr
 
 	Wire.beginTransmission(FRAM_ID.cfg.addr);
-	if (Wire.write(slave->cfg.addr << 1) == 0)			{ return false; }
-	if (Wire.endTransmission(false) != 0)				{ return false; }
-	if (Wire.requestFrom(FRAM_ID.cfg.addr, bytes) == 0)	{ return false; }
+	if (Wire.write(slave->cfg.addr << 1) == 0)						{ return false; }
+	if (Wire.endTransmission(false) != 0)							{ return false; }
+	if (Wire.requestFrom((int) FRAM_ID.cfg.addr, (int) bytes) == 0)	{ return false; }
 	for (uint16_t cnt = 0; cnt < bytes; cnt++)
 	{ *data++ = Wire.read(); }
-	if (Wire.endTransmission() != 0)					{ return false; }
+	if (Wire.endTransmission() != 0)								{ return false; }
 
 	return true;
 }
