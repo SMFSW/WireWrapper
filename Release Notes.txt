@@ -13,6 +13,11 @@ Feel free to share your thoughts @ xgarmanboziax@gmail.com about:
 ------------
 
 ** Actual:
+v1.1	29 Nov 2017:
+- Set Frequency higher than Fast Mode (400KHz) for AVR will set bus to Fast Mode
+- Set Frequency higher than High Speed (3.4MHz) for SAM, ESP... will set bus to Fast Mode +
+- I2C_set_xxx now returns values applied, not bool
+
 v1.0	21 Nov 2017:
 - Added const qualifier for function parameters
 - Return from comm functions if bytes to R/W set to 0
