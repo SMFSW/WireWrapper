@@ -1,0 +1,6 @@
+<map id="I2C_set_speed" name="I2C_set_speed">
+<area shape="rect" id="node2" href="$_wire_wrapper_8h.html#a99283d800332d700deed19f5a37e61d8" title="Enable I2c module on arduino board (including pull&#45;ups, enabling of ACK, and setting clock frequency)..." alt="" coords="173,31,240,57"/>
+<area shape="rect" id="node5" href="$_wire_wrapper_8h.html#a74e1381b536811b202d087471723fb9e" title="Disable I2c module on arduino board (releasing pull&#45;ups, and TWI control) " alt="" coords="166,81,247,108"/>
+<area shape="rect" id="node3" href="$wirewrapper__advanced_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="350,5,405,32"/>
+<area shape="rect" id="node4" href="$_wire_wrapper_8h.html#a41be982659cb049fcdf88a18e3e4c4e0" title="Get I2C current register address (addr may passed this way in procedures if contigous accesses) ..." alt="" coords="296,56,459,83"/>
+</map>

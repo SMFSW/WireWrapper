@@ -1,0 +1,4 @@
+<map id="I2C_slave_get_reg_addr" name="I2C_slave_get_reg_addr">
+<area shape="rect" id="node2" href="$_wire_wrapper_8h.html#a99283d800332d700deed19f5a37e61d8" title="Enable I2c module on arduino board (including pull&#45;ups, enabling of ACK, and setting clock frequency)..." alt="" coords="216,5,283,32"/>
+<area shape="rect" id="node3" href="$_wire_wrapper_8cpp.html#a7c5b1857ae28ade8959a8a06f500ecde" title="Change I2C frequency. " alt="" coords="331,5,442,32"/>
+</map>

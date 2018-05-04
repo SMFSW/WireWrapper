@@ -1,0 +1,5 @@
+<map id="loop" name="loop">
+<area shape="rect" id="node2" href="$_wire_wrapper_8cpp.html#ad5e4a006f6cea5844a810fab30b40f87" title="This function reads data from the address specified and stores this data in the area provided by the ..." alt="" coords="117,5,192,32"/>
+<area shape="rect" id="node3" href="$_wire_wrapper_8h.html#afc15fc625892e1e50e831d7934073299" title="This inline is a wrapper to I2C_read in case of contigous operations. " alt="" coords="101,56,208,83"/>
+<area shape="rect" id="node4" href="$_wire_wrapper_8h.html#ad5e4a006f6cea5844a810fab30b40f87" title="This function reads data from the address specified and stores this data in the area provided by the ..." alt="" coords="256,56,331,83"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="I2C_uninit" name="I2C_uninit">
+<area shape="rect" id="node2" href="$_wire_wrapper_8h.html#a7c5b1857ae28ade8959a8a06f500ecde" title="Change I2C frequency. " alt="" coords="141,5,251,32"/>
+<area shape="rect" id="node3" href="$_wire_wrapper_8h.html#acd209174a3b5ab213131a93633c19a38" title="Change I2C ack timeout. " alt="" coords="137,56,255,83"/>
+<area shape="rect" id="node4" href="$_wire_wrapper_8h.html#ad74e31ebd08a9ddef57f571783f37cc7" title="Change I2C message retries (in case of failure) " alt="" coords="141,107,251,133"/>
+<area shape="rect" id="node5" href="$_wire_wrapper_8h.html#ac370df06df51c68217eafcee96e5a3e0" title="Get I2C busy status. " alt="" coords="149,157,243,184"/>
+<area shape="rect" id="node6" href="$_wire_wrapper_8h.html#a83adef951ffd9fb5105216f6ee464bb9" title="This function writes the provided data to the address specified. " alt="" coords="157,208,235,235"/>
+</map>
