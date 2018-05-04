@@ -13,6 +13,10 @@ Feel free to share your thoughts @ xgarmanboziax@gmail.com about:
 ------------
 
 ** Actual:
+v1.3	3 May 2018:
+- Adding support for unit tests and doxygen documentation generation with Travis CI
+- Updated README.md
+
 v1.2	30 Nov 2017:
 - No internal address transmission when reading/writing to next internal address (make sure not to r/w last 16 address right just after init, otherwise make a dummy of address 0 just before)
 
