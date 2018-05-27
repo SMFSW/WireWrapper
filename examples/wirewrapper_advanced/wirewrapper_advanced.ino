@@ -7,7 +7,7 @@
 	This example code is in the public domain.
 
 	created Jan 23 2017
-	latest mod Nov 30 2017
+	latest mod May 13 2018
 	by SMFSW
 */
 
@@ -113,14 +113,13 @@ bool I2C_rd_advanced(I2C_SLAVE * slave, const uint16_t reg_addr, uint8_t * data,
 		if (Wire.write((uint8_t) reg_addr) == 0)					{ return false; }
 		if (Wire.endTransmission(false) != 0)						{ return false; }
 	}
+
 	if (Wire.requestFrom((int) slave->cfg.addr, (int) bytes) == 0)	{ return false; }
 	for (uint16_t cnt = 0; cnt < bytes; cnt++)
 	{
 		*data++ = Wire.read();
 		slave->reg_addr++;
 	}
-
-	if (Wire.endTransmission() != 0)								{ return false; }
 
 	return true;
 }
@@ -144,7 +143,6 @@ bool I2C_get_chip_id(I2C_SLAVE * slave, uint8_t * data)
 	if (Wire.requestFrom((int) FRAM_ID.cfg.addr, (int) bytes) == 0)	{ return false; }
 	for (uint16_t cnt = 0; cnt < bytes; cnt++)
 	{ *data++ = Wire.read(); }
-	if (Wire.endTransmission() != 0)								{ return false; }
 
 	return true;
 }

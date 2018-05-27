@@ -1,7 +1,7 @@
 /*!\file WireWrapper.cpp
 ** \author SMFSW
-** \copyright MIT SMFSW (2017)
-** \brief Arduino Wrapper for Wire librarry (for SAM, ESP8266...) code
+** \copyright MIT SMFSW (2017-2018)
+** \brief Arduino Wrapper for Wire library (for SAM, ESP8266...) code
 ** \warning Don't access (r/w) last 16b internal address byte alone right after init, this would lead to hazardous result (in such case, make a dummy read of addr 0 before)
 **/
 
@@ -177,7 +177,7 @@ static I2C_STATUS I2C_comm(I2C_SLAVE * slave, const uint16_t reg_addr, uint8_t *
 	ack = fc(slave, reg_addr, data, bytes);
 	while ((!ack) && (retry != 0))	// If com not successful, retry some more times
 	{
-		delay(5);
+		delay(1);
 		ack = fc(slave, reg_addr, data, bytes);
 		retry--;
 	}
@@ -266,14 +266,13 @@ static bool I2C_rd(I2C_SLAVE * slave, const uint16_t reg_addr, uint8_t * data, c
 		if (Wire.write((uint8_t) reg_addr) == 0)					{ return false; }
 		if (Wire.endTransmission(false) != 0)						{ return false; }
 	}
+
 	if (Wire.requestFrom((int) slave->cfg.addr, (int) bytes) == 0)	{ return false; }
 	for (uint16_t cnt = 0; cnt < bytes; cnt++)
 	{
 		*data++ = Wire.read();
 		slave->reg_addr++;
 	}
-
-	if (Wire.endTransmission() != 0)								{ return false; }
 
 	return true;
 }
