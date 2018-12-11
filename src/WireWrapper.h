@@ -181,7 +181,7 @@ void I2C_init(const uint16_t speed);
 **/
 inline void __attribute__((__always_inline__)) I2C_uninit()
 {
-	#if !defined(__TINY__) && !defined(ARDUINO_ARCH_ESP8266) && !defined(ARDUINO_ESP8266_ESP01)
+	#if !defined(__TINY__) && !defined(ARDUINO_ARCH_ESP8266) && !defined(ARDUINO_ESP8266_ESP01) && !defined(ARDUINO_ARCH_ESP32)
 		Wire.end();
 	#endif
 }

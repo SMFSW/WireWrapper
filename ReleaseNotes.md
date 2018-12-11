@@ -1,5 +1,5 @@
 Arduino Wrapper for Wire library (for SAM, ESP8266...)
-2017-2017 SMFSW
+2017-2018 SMFSW
 
 If you're working with AVR targets, you may consider using cI2C library instead.
 WireWrapper is based on cI2C library (for functions, structs seen from the outside) but uses Wire library.
@@ -13,6 +13,9 @@ Feel free to share your thoughts @ xgarmanboziax@gmail.com about:
 ------------
 
 ** Actual:
+v1.4	11 December 2018:
+- Fixed ESP32 compilation issue (Wire.end not defined in the Wire class)
+
 v1.3	13 May 2018:
 - Removed call to endTramsission after requestFrom
 - Delay between retries is now 1ms
