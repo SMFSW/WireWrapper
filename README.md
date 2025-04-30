@@ -1,4 +1,4 @@
-# WireWrapper [![Build Status](https://travis-ci.com/SMFSW/WireWrapper.svg?branch=master)](https://travis-ci.com/SMFSW/WireWrapper)
+# WireWrapper
 
 Arduino Wrapper for Wire library (for SAM, ESP8266...)
 
