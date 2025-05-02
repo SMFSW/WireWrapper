@@ -1,4 +1,4 @@
-# WireWrapper
+# WireWrapper [![CodeFactor](https://www.codefactor.io/repository/github/smfsw/wirewrapper/badge)](https://www.codefactor.io/repository/github/smfsw/wirewrapper)
 
 Arduino Wrapper for Wire library (for SAM, ESP8266...)
 
