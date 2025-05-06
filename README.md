@@ -1,4 +1,14 @@
-# WireWrapper [![CodeFactor](https://www.codefactor.io/repository/github/smfsw/wirewrapper/badge)](https://www.codefactor.io/repository/github/smfsw/wirewrapper)
+# WireWrapper
+
+[![author](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SMFSW/a9a2b2a02fda1b33461d53ddfe69d649/raw/auth_SMFSW.json)](https://github.com/SMFSW)
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SMFSW/a9a2b2a02fda1b33461d53ddfe69d649/raw/WireWrapper_status_badge.json)
+[![license](https://img.shields.io/badge/License-MIT-darkred.svg)](LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/smfsw/wirewrapper/badge)](https://www.codefactor.io/repository/github/smfsw/wirewrapper)
+
+![platform](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SMFSW/a9a2b2a02fda1b33461d53ddfe69d649/raw/platform_INO.json)
+
+[![doxy](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SMFSW/a9a2b2a02fda1b33461d53ddfe69d649/raw/tool_DOXY.json)](https://smfsw.github.io/WireWrapper)
+[![re_note](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/SMFSW/a9a2b2a02fda1b33461d53ddfe69d649/raw/tool_RN.json)](ReleaseNotes.md)
 
 Arduino Wrapper for Wire library (for SAM, ESP8266...)
 
@@ -64,16 +74,6 @@ following examples should work with any I2C EEPROM/FRAM with address 0x50
 * [wirewrapper_master_write.ino](examples/wirewrapper_master_write/wirewrapper_master_write.ino): Write some bytes to FRAM and compare them with what's read afterwards
 * [wirewrapper_master_read.ino](examples/wirewrapper_master_read/wirewrapper_master_read.ino): Read some bytes in FRAM
 * [wirewrapper_advanced.ino](examples/wirewrapper_advanced/wirewrapper_advanced.ino): Redirecting slave write & read functions (to custom functions following typedef)
-
-## Documentation
-
-Doxygen doc can be generated using "Doxyfile".
-
-See [generated documentation](https://smfsw.github.io/WireWrapper/)
-
-## Release Notes
-
-See [release notes](ReleaseNotes.md)
 
 ## See also
 
